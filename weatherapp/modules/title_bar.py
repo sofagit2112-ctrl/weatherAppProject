@@ -22,9 +22,9 @@ class TitleBar(QFrame):
         self.close_button = QToolButton()
         self.hide_button = QToolButton()
         self.openfull_button = QToolButton()
-        self.close_button.setIcon(QIcon("images/close.svg"))
-        self.hide_button.setIcon(QIcon("images/hide.svg"))
-        self.openfull_button.setIcon(QIcon("images/full.svg"))
+        self.close_button.setIcon(QIcon("weatherapp/images/close.svg"))
+        self.hide_button.setIcon(QIcon("weatherapp/images/hide.svg"))
+        self.openfull_button.setIcon(QIcon("weatherapp/images/full.svg"))
         
         self.button_layout.addWidget(self.close_button)
         self.button_layout.addWidget(self.hide_button)
