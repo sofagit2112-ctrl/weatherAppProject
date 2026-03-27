@@ -9,10 +9,9 @@ class WeatherInfo(QFrame):
         super().__init__()
         self.setFixedSize(390, 303)
         
-
-        self.layout1 = QVBoxLayout() 
+        self.layout1 = QVBoxLayout()
         self.layout2 = QHBoxLayout()
-        self.layout3 = QHBoxLayout() 
+        self.layout3 = QHBoxLayout()
             
         data = get_weather(city_name)
         
@@ -50,13 +49,14 @@ class WeatherInfo(QFrame):
 
         self.temp_max = QLabel(f"Макс: {data['temp_max']}°")
         self.temp_max.setFont(QFont("Arial", 12))
-        self.temp_max.setStyleSheet("background-color: transparent")
         self.temp_max.setAlignment(Qt.AlignmentFlag.AlignRight)
+        self.temp_max.setStyleSheet("background-color: transparent")
+
 
         self.temp_min = QLabel(f"Мін: {data['temp_min']}°")
         self.temp_min.setFont(QFont("Arial", 12))
-        self.temp_min.setStyleSheet("background-color: transparent")
         self.temp_min.setAlignment(Qt.AlignmentFlag.AlignLeft)
+        self.temp_min.setStyleSheet("background-color: transparent")
 
         self.layout2.addWidget(self.temp_max)
         self.layout2.addWidget(self.temp_min)

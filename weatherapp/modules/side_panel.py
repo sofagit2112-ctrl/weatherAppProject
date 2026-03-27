@@ -1,6 +1,9 @@
 from PyQt6.QtWidgets import QFrame, QVBoxLayout, QHBoxLayout, QScrollArea, QLabel, QWidget, QPushButton
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QFont, QMouseEvent
+from PyQt6.QtWidgets import QFrame, QVBoxLayout, QHBoxLayout, QScrollArea, QLabel, QWidget
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QFont
 from .utils import get_weather
 from datetime import datetime, timezone, timedelta
 
@@ -34,13 +37,19 @@ class SidePanel(QFrame):
             frame = QFrame()
             frame.setFixedSize(330, 115)
             frame.setStyleSheet("background-color: transparent")
+            
+            frame = QFrame()
+            frame.setFixedSize(330, 115)
+            frame.setStyleSheet("""
+                    background-color: transparent;
+            """)
 
             card_layout = QHBoxLayout(frame)
             card_layout.setContentsMargins(15, 12, 15, 12)
 
             left_column = QVBoxLayout()
             left_column.setSpacing(0)
-            
+
             city_label = QLabel(ua_names.get(city, city))
             city_label.setFont(QFont("Arial", 20, QFont.Weight.Bold))
             city_label.setStyleSheet("color: white; background: transparent;")

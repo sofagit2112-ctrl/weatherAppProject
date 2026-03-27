@@ -3,6 +3,7 @@ from PyQt6.QtGui import QFont, QPixmap
 from PyQt6.QtCore import Qt
 from ..utils import get_forecast, get_weather
 from datetime import datetime, timezone, timedelta
+from PyQt6.QtSvgWidgets import QSvgWidget
 
 class ForecastInfo(QFrame):
     def __init__(self):
@@ -36,12 +37,12 @@ class ForecastInfo(QFrame):
                                     """)
         self.scroll_element.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.scroll_frame.setLayout(self.forecast_layout)
-        
+
         forecast_data = get_forecast(48.45, 34.9833)
 
         for i in forecast_data['list'][:20]:
             weather_data = get_weather("Dnipro")
-            
+
             frame = QFrame()
             frame.setFixedSize(80, 90)
             frame.setStyleSheet("""
@@ -59,21 +60,21 @@ class ForecastInfo(QFrame):
         
             self.hour = QLabel(display_time)
             self.hour.setFont(QFont("Arial", 11))
+            self.hour = QLabel("17")
+            self.hour.setFont(QFont("Arial", 12))
             self.hour.setAlignment(Qt.AlignmentFlag.AlignCenter)
             self.hour.setStyleSheet("background-color: transparent")
             self.hour.setFixedSize(60, 20)
             self.layout1.addWidget(self.hour)
 
-            self.icon = i["weather"][0]["icon"]
-            self.image = QPixmap(f"weatherapp/images/dark/{self.icon}.svg")
-            self.image.scaled(30, 30)
-            self.image_label = QLabel()
-            self.image_label.setPixmap(self.image)
-            self.image_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-            self.image_label.setStyleSheet("background-color: transparent")
-            self.image_label.setFixedSize(60, 40)
-            self.image_label.setContentsMargins(0, 0, 0, 10)
-            self.layout1.addWidget(self.image_label)
+            icon_code = i["weather"][0]["icon"]
+            svg_path = f"weatherapp/images/dark/{icon_code}.svg"
+            
+            icon_svg = QSvgWidget()
+            icon_svg.load(svg_path)
+            icon_svg.setFixedSize(30, 30)
+            icon_svg.setContentsMargins(0, 0, 0, 30)
+            self.layout1.addWidget(icon_svg, alignment=Qt.AlignmentFlag.AlignCenter)
 
             self.temp_value = round(i['main']['temp'])
             self.temp = QLabel(f"{self.temp_value}°")

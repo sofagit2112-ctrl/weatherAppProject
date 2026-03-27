@@ -7,6 +7,9 @@ def get_data(city_name: str):
 
 def get_weather(city_name: str):
     url = f"https://api.openweathermap.org/data/2.5/weather?q={city_name}&appid=2bf2e8aa6bbe3d941fc43499ab8e5306&units=metric&lang=uk"
+    api_key = "2bf2e8aa6bbe3d941fc43499ab8e5306"
+    url = f"https://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={api_key}&units=metric&lang=uk"
+    
     try:
         response = requests.get(url)
         if response.status_code == 200:
@@ -25,6 +28,10 @@ def get_weather(city_name: str):
 
 def get_forecast(lat: str, ion: str):
     url = f"https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={ion}&appid=2bf2e8aa6bbe3d941fc43499ab8e5306&units=metric&lang=uk"
-    response = requests.get(url)
-    if response.status_code == 200:
-        return response.json()
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            return response.json()
+    except Exception as e:
+        print(f"Помилка: {e}")
+    return None
