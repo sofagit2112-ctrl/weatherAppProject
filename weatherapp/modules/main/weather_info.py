@@ -5,14 +5,14 @@ from PyQt6.QtSvgWidgets import QSvgWidget
 from ..utils import get_weather
 
 class WeatherInfo(QFrame):
-    def __init__(self, city_name="Dnipro"):
-        super().__init__()
+    def __init__(self, city_name = "Dnipro"):
+        QFrame.__init__(self)
         self.setFixedSize(390, 303)
         
         self.layout1 = QVBoxLayout()
         self.layout2 = QHBoxLayout()
         self.layout3 = QHBoxLayout()
-            
+        
         data = get_weather(city_name)
         
         self.city_name_label = QLabel(city_name)

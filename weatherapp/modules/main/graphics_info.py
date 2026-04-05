@@ -3,15 +3,17 @@ from ..utils import get_temp
 from PyQt6.QtCore import Qt
 
 class GraphicsInfo(QFrame):
-    def __init__(self):
+    def __init__(self, city_name = "Dnipro"):
         QFrame.__init__(self)
         self.setFixedSize(790, 197)
         self.setStyleSheet("background-color: rgba(0, 0, 0, 0.2)")
         self.main_layout = QHBoxLayout()
         self.main_layout.setAlignment(Qt.AlignmentFlag.AlignBottom)
-        # layout.setAlignment(Qt.AlignmentFlag) - вирівнювання елементів (Qt з QtCore)
         self.setLayout(self.main_layout)
-        min_visible_temp, list_height = get_temp()
+
+        self.city_name = city_name
+
+        min_visible_temp, list_height = get_temp(city_name=self.city_name)
         for height in list_height:
             frame = QFrame()
             frame.setFixedHeight(height)
@@ -27,7 +29,7 @@ class GraphicsInfo(QFrame):
         
         max_temp = min_visible_temp + 35 
         for count in range(8):
-            temp = max_temp - count *5 
+            temp = max_temp - count * 5 
             text = QLabel(text=f"{temp}°")
             text.setStyleSheet("background-color: transparent")
             self.temp_layout.addWidget(text)

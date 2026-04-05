@@ -1,3 +1,3 @@
-import PyQt6.QtWidgets as widgets
+import PyQt6.QtWidgets as widgets 
 
 application = widgets.QApplication([])

@@ -6,7 +6,7 @@ from datetime import datetime, timezone, timedelta
 from PyQt6.QtSvgWidgets import QSvgWidget
 
 class ForecastInfo(QFrame):
-    def __init__(self):
+    def __init__(self, city_name = "Dnipro"):
         QFrame.__init__(self)
         self.vertical_layout = QVBoxLayout()
         self.setLayout(self.vertical_layout)
@@ -38,11 +38,13 @@ class ForecastInfo(QFrame):
         self.scroll_element.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.scroll_frame.setLayout(self.forecast_layout)
 
-        forecast_data = get_forecast(48.45, 34.9833)
+        weather_data = get_weather(city_name)
+
+        lat = weather_data["coord"]["lat"]
+        lon = weather_data["coord"]["lon"]
+        forecast_data = get_forecast(lat, lon)
 
         for i in forecast_data['list'][:20]:
-            weather_data = get_weather("Dnipro")
-
             frame = QFrame()
             frame.setFixedSize(80, 90)
             frame.setStyleSheet("""
@@ -59,8 +61,6 @@ class ForecastInfo(QFrame):
             display_time = forecast_time.strftime("%H")
         
             self.hour = QLabel(display_time)
-            self.hour.setFont(QFont("Arial", 11))
-            self.hour = QLabel("17")
             self.hour.setFont(QFont("Arial", 12))
             self.hour.setAlignment(Qt.AlignmentFlag.AlignCenter)
             self.hour.setStyleSheet("background-color: transparent")

@@ -1,12 +1,14 @@
 from PyQt6.QtWidgets import QFrame, QVBoxLayout, QHBoxLayout, QLabel
 from PyQt6.QtGui import QFont, QPixmap
 from PyQt6.QtCore import Qt
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
+from ..utils import get_weather
 
 class TimeInfo(QFrame):
-    def __init__(self):
+    def __init__(self, city_name="Dnipro"):
         QFrame.__init__(self)
         self.setFixedSize(390, 303)
+        self.city_name = city_name
 
         self.layout1 = QVBoxLayout()
         self.layout2 = QHBoxLayout()
@@ -21,6 +23,9 @@ class TimeInfo(QFrame):
         self.date.setContentsMargins(15, 0, 0, 0)
         self.layout1.addWidget(self.date)
         
+        self.city_name = city_name
+        weather_data = get_weather(city_name = self.city_name)
+
         days_ua = [
             "Понеділок", 
             "Вівторок", 
@@ -63,7 +68,8 @@ class TimeInfo(QFrame):
         self.time_image = self.time_image.scaled(170, 170)
         self.time_image_label.setPixmap(self.time_image)
         
-        self.time_now = datetime.now().strftime("%H:%M")
+        tz = timezone(timedelta(seconds=weather_data['timezone']))
+        self.time_now = datetime.now(tz).strftime("%H:%M")
         self.time = QLabel(self.time_now)
         self.time.setFont(QFont("Arial", 25))
         self.time.setAlignment(Qt.AlignmentFlag.AlignCenter)
